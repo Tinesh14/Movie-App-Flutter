@@ -23,7 +23,6 @@ class _NowPlayingMoviePageState extends State<NowPlayingMoviePage> {
   @override
   void initState() {
     super.initState();
-    context.read<NowPlayingMovieCubit>().fetch(page);
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge &&
           _scrollController.position.pixels != 0 &&
@@ -69,7 +68,11 @@ class _NowPlayingMoviePageState extends State<NowPlayingMoviePage> {
           padding: const EdgeInsets.all(8.0),
           child: BlocConsumer<NowPlayingMovieCubit, NowPlayingMovieState>(
             builder: (context, state) {
-              if (state is NowPlayingMovieLoading) {
+              if (state is NowPlayingMovieInitial) {
+                context.read<NowPlayingMovieCubit>().fetch(page);
+              }
+              if (state is NowPlayingMovieLoading ||
+                  state is NowPlayingMovieInitial) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -84,7 +87,10 @@ class _NowPlayingMoviePageState extends State<NowPlayingMoviePage> {
                 } else {
                   return Center(
                     key: const Key('error_message'),
-                    child: Text(state.message),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(state.message),
+                    ),
                   );
                 }
               } else if (state is NowPlayingMovieEmpty) {

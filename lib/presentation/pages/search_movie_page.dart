@@ -86,7 +86,10 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
                   return Expanded(
                     child: Center(
                       key: const Key('error_message'),
-                      child: Text(state.message),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(state.message),
+                      ),
                     ),
                   );
                 } else {

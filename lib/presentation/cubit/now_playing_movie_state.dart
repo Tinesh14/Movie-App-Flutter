@@ -5,6 +5,8 @@ abstract class NowPlayingMovieState extends Equatable {
   List<Object?> get props => [];
 }
 
+class NowPlayingMovieInitial extends NowPlayingMovieState {}
+
 class NowPlayingMovieEmpty extends NowPlayingMovieState {}
 
 class NowPlayingMovieLoading extends NowPlayingMovieState {}

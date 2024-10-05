@@ -13,7 +13,7 @@ class NowPlayingMovieCubit extends Cubit<NowPlayingMovieState>
     with HydratedMixin {
   final GetNowPlayingMovies getNowPlayingMovies;
   NowPlayingMovieCubit(this.getNowPlayingMovies)
-      : super(NowPlayingMovieLoading()) {
+      : super(NowPlayingMovieInitial()) {
     hydrate();
   }
 

@@ -26,6 +26,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return const Left(ServerFailure('Something Went Wrong!'));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } catch (e) {
+      return Left(CatchFailure(e.toString()));
     }
   }
 
@@ -39,6 +41,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return const Left(ServerFailure('Something Went Wrong!'));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } catch (e) {
+      return Left(CatchFailure(e.toString()));
     }
   }
 
@@ -52,6 +56,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return const Left(ServerFailure('Something Went Wrong!'));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } catch (e) {
+      return Left(CatchFailure(e.toString()));
     }
   }
 }

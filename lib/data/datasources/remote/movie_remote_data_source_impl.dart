@@ -11,33 +11,45 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   MovieRemoteDataSourceImpl({required this.service});
   @override
   Future<MovieDetailResponse> getMovieDetail(String id) async {
-    final response = await service.getDetailMovie(id);
-    if (response != null) {
-      return MovieDetailResponse.fromJson(response);
-    } else {
-      throw ServerException();
+    try {
+      final response = await service.getDetailMovie(id);
+      if (response != null) {
+        return MovieDetailResponse.fromJson(response);
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
   @override
   Future<List<MovieModel>> getNowPlayingMovies(int page) async {
-    final response = await service.getNowPlayingMovies(page);
-    if (response["results"] != null) {
-      return List<MovieModel>.from(
-          (response["results"] as List).map((x) => MovieModel.fromJson(x)));
-    } else {
-      throw ServerException();
+    try {
+      final response = await service.getNowPlayingMovies(page);
+      if (response["results"] != null) {
+        return List<MovieModel>.from(
+            (response["results"] as List).map((x) => MovieModel.fromJson(x)));
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
   @override
   Future<List<MovieModel>> searchMovies(String query, {int? page}) async {
-    final response = await service.searchMovies(query, page: page);
-    if (response["results"] != null) {
-      return List<MovieModel>.from((response.data?["results"] as List)
-          .map((x) => MovieModel.fromJson(x)));
-    } else {
-      throw ServerException();
+    try {
+      final response = await service.searchMovies(query, page: page);
+      if (response["results"] != null) {
+        return List<MovieModel>.from(
+            (response["results"] as List).map((x) => MovieModel.fromJson(x)));
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
