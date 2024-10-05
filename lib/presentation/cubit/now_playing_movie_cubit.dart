@@ -13,26 +13,30 @@ class NowPlayingMovieCubit extends Cubit<NowPlayingMovieState>
     with HydratedMixin {
   final GetNowPlayingMovies getNowPlayingMovies;
   NowPlayingMovieCubit(this.getNowPlayingMovies)
-      : super(NowPlayingMovieEmpty()) {
+      : super(NowPlayingMovieLoading()) {
     hydrate();
   }
 
-  fetch({int? page}) async {
+  fetch(int page) async {
     try {
-      emit(NowPlayingMovieLoading());
-      final result = await getNowPlayingMovies.execute(page ?? 1);
+      if (page == 1) emit(NowPlayingMovieLoading());
+      final result = await getNowPlayingMovies.execute(page);
       result.fold(
         (failure) => emit(NowPlayingMovieError(failure.message)),
         (data) {
           if (data.isEmpty) {
-            emit(NowPlayingMovieEmpty());
+            if (page == 1) {
+              emit(NowPlayingMovieEmpty());
+            } else {
+              emit(NowPlayingMovieMessage("Data Kosong"));
+            }
           } else {
             emit(NowPlayingMovieData(data));
           }
         },
       );
     } catch (e) {
-      emit(NowPlayingMovieError('error try catch'));
+      emit(NowPlayingMovieError('Something Went Wrong!'));
     }
   }
 

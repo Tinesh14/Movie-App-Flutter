@@ -26,3 +26,12 @@ class NowPlayingMovieError extends NowPlayingMovieState {
   @override
   List<Object?> get props => [message];
 }
+
+class NowPlayingMovieMessage extends NowPlayingMovieState {
+  final String message;
+
+  NowPlayingMovieMessage(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}

@@ -22,7 +22,7 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
         },
       );
     } catch (e) {
-      emit(const MovieDetailError('error try catch'));
+      emit(const MovieDetailError('Something Went Wrong!'));
     }
   }
 }

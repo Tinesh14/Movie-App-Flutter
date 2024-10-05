@@ -29,7 +29,7 @@ class SearchMovieCubit extends Cubit<SearchMovieState> with HydratedMixin {
         },
       );
     } catch (e) {
-      emit(const SearchMovieError('error try catch'));
+      emit(const SearchMovieError('Something Went Wrong!'));
     }
   }
 
