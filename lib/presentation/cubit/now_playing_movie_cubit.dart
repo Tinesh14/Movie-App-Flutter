@@ -31,7 +31,7 @@ class NowPlayingMovieCubit extends Cubit<NowPlayingMovieState>
               emit(NowPlayingMovieMessage("Data Kosong"));
             }
           } else {
-            emit(NowPlayingMovieData(data));
+            emit(NowPlayingMovieData(page, data));
           }
         },
       );
@@ -48,7 +48,7 @@ class NowPlayingMovieCubit extends Cubit<NowPlayingMovieState>
         final movies = (json['movies'] as List)
             .map((movieJson) => Movie.fromJson(movieJson))
             .toList();
-        return NowPlayingMovieData(movies);
+        return NowPlayingMovieData(json['page'], movies);
       }
       return NowPlayingMovieEmpty();
     } catch (e) {
@@ -59,10 +59,11 @@ class NowPlayingMovieCubit extends Cubit<NowPlayingMovieState>
 
   @override
   Map<String, dynamic>? toJson(NowPlayingMovieState state) {
-    debugPrint('toJson hydrated now playing movie: $state');
-    if (state is NowPlayingMovieData) {
+    if (state is NowPlayingMovieData && state.page == 1) {
+      debugPrint('toJson hydrated now playing movie: $state');
       return {
         'movies': state.result.map((movie) => movie.toJson()).toList(),
+        'page': state.page,
       };
     }
     return null;

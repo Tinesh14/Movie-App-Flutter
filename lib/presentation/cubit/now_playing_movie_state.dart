@@ -12,12 +12,13 @@ class NowPlayingMovieEmpty extends NowPlayingMovieState {}
 class NowPlayingMovieLoading extends NowPlayingMovieState {}
 
 class NowPlayingMovieData extends NowPlayingMovieState {
+  final int page;
   final List<Movie> result;
 
-  NowPlayingMovieData(this.result);
+  NowPlayingMovieData(this.page, this.result);
 
   @override
-  List<Object?> get props => [result];
+  List<Object?> get props => [result, page];
 }
 
 class NowPlayingMovieError extends NowPlayingMovieState {
