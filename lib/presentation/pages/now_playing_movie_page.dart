@@ -55,6 +55,7 @@ class _NowPlayingMoviePageState extends State<NowPlayingMoviePage> {
         ],
       ),
       body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
         onRefresh: () async {
           setState(() {
             page = 1;
@@ -86,16 +87,24 @@ class _NowPlayingMoviePageState extends State<NowPlayingMoviePage> {
                   error = true;
                 } else {
                   return Center(
-                    key: const Key('error_message'),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(state.message),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(state.message),
+                      ),
                     ),
                   );
                 }
               } else if (state is NowPlayingMovieEmpty) {
                 return const Center(
-                  child: Text('Empty Data'),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Empty Data'),
+                    ),
+                  ),
                 );
               }
               return ListView.builder(
