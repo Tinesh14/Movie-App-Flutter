@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         routerConfig: Routes.router,
-        title: 'Flutter Demo',
         theme: ThemeData.dark().copyWith(
           colorScheme: kColorScheme,
           primaryColor: kRichBlack,

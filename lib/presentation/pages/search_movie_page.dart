@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +16,13 @@ class SearchMoviePage extends StatefulWidget {
 
 class _SearchMoviePageState extends State<SearchMoviePage> {
   SearchMovieCubit? searchMovieCubit;
+  Timer? _debounce;
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +35,21 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
         child: Column(
           children: [
             TextField(
-              onSubmitted: (value) {
-                searchMovieCubit?.search(value);
-                debugPrint('onSubmitted: $value');
+              // onSubmitted: (value) {
+              //   searchMovieCubit?.search(value);
+              //   debugPrint('onSubmitted: $value');
+              // },
+              onChanged: (value) {
+                if (_debounce?.isActive ?? false) {
+                  _debounce?.cancel();
+                }
+                _debounce = Timer(
+                  const Duration(milliseconds: 500),
+                  () {
+                    searchMovieCubit?.search(value);
+                    debugPrint('onChanged: $value');
+                  },
+                );
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
